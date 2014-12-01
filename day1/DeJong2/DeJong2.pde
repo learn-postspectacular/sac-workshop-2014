@@ -60,6 +60,12 @@ void draw() {
 void keyPressed() {
   if (key == ' ') {
     saveFrame(System.currentTimeMillis()+".png");
+  } else if (key == 'r') {
+    a = random(-3, 3);
+    b = random(-3, 3);
+    c = random(-3, 3);
+    d = random(-3, 3);
+    background(0);
   }
 }
 
