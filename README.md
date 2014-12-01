@@ -9,9 +9,12 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 - [SourceTree](http://sourcetreeapp.com/)
 - [Source code for this repo](https://github.com/learn-postspectacular/sac-workshop-2014)
 
-## Day 1
+## Day 1 - Iterative processes
 
-TBD
+- https://en.wikipedia.org/wiki/Attractor
+- http://paulbourke.net/fractals/peterdejong/
+
+- [Source code](day1/)
 
 ## Day 2
 
