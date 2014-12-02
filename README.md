@@ -4,8 +4,6 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 # Requirements
 
-- [Processing](http://processing.org)
-- [toxiclibs](http://toxiclibs.org)
 - [SourceTree](http://sourcetreeapp.com/)
 - [Source code for this repo](https://github.com/learn-postspectacular/sac-workshop-2014)
 
