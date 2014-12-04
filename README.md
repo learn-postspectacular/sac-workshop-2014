@@ -1,5 +1,7 @@
 # sac-workshop-2014
 
+![Subdivisions](day3/Subdiv/20141203-subdiv.png)
+
 Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschule.de/architecture/), Dec 2014
 
 # Requirements
