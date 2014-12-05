@@ -10,7 +10,7 @@
 // mousewheel - adjust zoom
 
 // Created during & for workshop at Städelschule Frankfurt
-// (c) 2014 Karsten Schmidt // ASL2 licensed
+// (c) 2014 Karsten Schmidt // LGPL3 licensed
 
 import toxi.geom.*;
 import toxi.geom.mesh.*;

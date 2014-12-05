@@ -13,20 +13,35 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 ## Day 1 - Iterative processes
 
+[Source code](day1/)
+
+### References
+
 - https://en.wikipedia.org/wiki/Attractor
 - http://paulbourke.net/fractals/peterdejong/
 
-- [Source code](day1/)
-
 ## Day 2
 
-TBD
+[Source code](day2/)
 
 ## Day 3
 
-TBD
+[Source code](day3/)
+
+### Di-pole fieldline agents
+
+![](day3/FieldLineAgents/export.png)
+
+### Sequential / recursive subdivisions
+
+![Subdivisions](day3/Subdiv/20141203-subdiv2.png)
 
 ## Day 4
+
+[Source code](day4/)
+
+### 2D Subdivions
+
 
 ### Agents
 
@@ -39,7 +54,3 @@ TBD
 ## Day 5
 
 TBD
-
-
-
-http://pastebin.com/aBi8Vb9x
