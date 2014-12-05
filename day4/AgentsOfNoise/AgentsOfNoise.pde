@@ -1,3 +1,18 @@
+// 2D/3D agent system navigating contour lines of a terrain
+// Partly based on TerrainSteering example bundled w/ toxiclibs
+// Various config settings can be adjusted to vary both behavior
+// and visualization, see table for reference:
+// https://github.com/learn-postspectacular/sac-workshop-2014#agents
+//
+// Key controls:
+// 3 - toggle 2d/3d visualization
+// r - randomize terrain & agents
+// a - randomize agents only
+// space - export screenshot (in sketch folder)
+//
+// Created during & for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // LGPLv3 licensed
+
 import toxi.geom.*;
 import toxi.geom.mesh.*;
 import toxi.processing.*;
@@ -10,28 +25,29 @@ import toxi.math.noise.*;
 import java.util.*;
 import javax.media.opengl.GL;
 
-int IMG_SIZE = 100;
+int        IMG_SIZE = 100;
 FloatRange NOISE_SCALE = new FloatRange(0.03, 0.08);
 
-int NUM_AGENTS = 500;
+int        NUM_AGENTS = 500;
 FloatRange SPEED_RANGE = new FloatRange(1, 3);
-float SCAN_DIST = 20;
+float      SCAN_DIST = 20;
+float      SCAN_THETA = PI / 12;
+float      TERRAIN_SCALE = 4;
+float      EL_BAND_SIZE = 2;
 
-float EL_BAND_SIZE = 2;
-boolean USE_EL_HUE = true;
-float HUE_COMPRESS = 20000;
-float BASE_HUE = 0.0;
+boolean    USE_EL_HUE = true;
+float      HUE_COMPRESS = 20000;
+float      BASE_HUE = 0.0;
 
 PImage img;
 
 Terrain terra;
 TriangleMesh terrainMesh;
+List<Agent> agents;
 
 ToxiclibsSupport gfx;
 
-List<Agent> agents = new ArrayList<Agent>();
-
-boolean draw3D;// = true;
+boolean draw3D;
 
 void setup() {
   size(1280, 720, OPENGL);
@@ -53,9 +69,9 @@ void draw() {
     image(img, 0, 0);
     lights();
     noStroke();
-    translate(width/2, height/2, 0);
-    rotateX(TWO_PI/3);
-    rotateY(mouseX*0.01);
+    translate(width / 2, height / 2, 0);
+    rotateX(TWO_PI / 3);
+    rotateY(mouseX * 0.01);
     scale(2, 1, 2);
     fill(255);
     gfx.mesh(terrainMesh, false);
@@ -65,7 +81,7 @@ void draw() {
   } else {
     PGL pgl = ((PGraphicsOpenGL)g).pgl;
     pgl.blendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE);
-    translate(width/2, height/2);
+    translate(width / 2, height / 2);
     //scale(1.5);
     for (Agent a : agents) {
       a.draw2D();
@@ -77,13 +93,12 @@ void randomizeTerrain() {
   Vec2D offset = new Vec2D(random(100), random(100));
   float s = NOISE_SCALE.pickRandom();
   float[] el = new float[img.width*img.height];
-  for (int y = 0, idx = 0; y < img.height; y++) {
+  for (int y = 0; y < img.height; y++) {
     for (int x = 0; x < img.width; x++) {
-      float n = (float)SimplexNoise.noise(offset.x+x*s, offset.y+y*s);
+      float n = (float)SimplexNoise.noise(offset.x + x * s, offset.y + y * s);
       float c = constrain(map(n, -1, 1, 0, 255), 0, 255);
       img.set(x, y, color(c));
       el[y * img.width + x] = c;
-      //el[idx] = c; idx++;
     }
   }
   terra = new Terrain(img.width, img.height, 4);
@@ -107,14 +122,15 @@ FloatRange makeElevationRange(float el) {
 }
 
 void randomizeAgents() {
-  agents.clear();
+  agents = new ArrayList<Agent>();
   GenericSet<FloatRange> elOpts = new GenericSet<FloatRange>();
-  for (int i=0; i<255; i+=10) {
+  for (int i = 0; i < 255; i += 10) {
     elOpts.add(makeElevationRange(i));
   }
-  for (int i=0; i < NUM_AGENTS; i++) {
-    agents.add(new Agent(random(-1, 1)*img.width*4/2, random(-1, 1)*img.width*4/2, elOpts.pickRandom()));
-    //agents.add(new Agent(0, 0, elOpts.pickRandom()));
+  for (int i = 0; i < NUM_AGENTS; i++) {
+    float x = random(-1, 1) * img.width * TERRAIN_SCALE / 2;
+    float y = random(-1, 1) * img.height * TERRAIN_SCALE / 2;
+    agents.add(new Agent(x, y, elOpts.pickRandom()));
   }
 }
 
