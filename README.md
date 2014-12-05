@@ -28,8 +28,18 @@ TBD
 
 ## Day 4
 
-TBD
+### Agents
+
+| scan dist | speed 0.5 - 2 | speed 1 - 3 | speed 1 - 4 | speed 2 - 5 |
+| --------- | ------------- | ----------- | ----------- | ----------- |
+| 10        | ![](day4/AgentsOfNoise/s0.5-2-sd10.jpg) | ![](day4/AgentsOfNoise/s1-3-sd10.jpg) | ![](day4/AgentsOfNoise/s1-4-sd10.jpg) | ![](day4/AgentsOfNoise/s2-5-sd10.jpg) |
+| 20        | ![](day4/AgentsOfNoise/s0.5-2-sd20.jpg) | ![](day4/AgentsOfNoise/s1-3-sd20.jpg) | ![](day4/AgentsOfNoise/s1-4-sd20.jpg) | ![](day4/AgentsOfNoise/s2-5-sd20.jpg) |
+| 40        | ![](day4/AgentsOfNoise/s0.5-2-sd40.jpg) | ![](day4/AgentsOfNoise/s1-3-sd40.jpg) | ![](day4/AgentsOfNoise/s1-4-sd40.jpg) | ![](day4/AgentsOfNoise/s2-5-sd40.jpg) |
 
 ## Day 5
 
 TBD
+
+
+
+http://pastebin.com/aBi8Vb9x
