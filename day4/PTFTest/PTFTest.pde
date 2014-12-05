@@ -1,3 +1,15 @@
+// A port of the Parallel-transport Frame implementation and demo
+// from http://thi.ng/geom
+// Demo computes a number of points on a configurable torus knot
+// to form a closed point loop, then sweeps one (or more) 2D profile shapes
+// along the curve to create a 3D mesh and saves it as STL.
+// If the multiple-strand based approach is taken, the strands are distributed
+// around the main sweep profile circle, which has its radius modulated by
+// a sine-wave during the sweeping process
+
+// Ported from Clojure to toxiclibs for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // ASL2 licensed
+
 import toxi.geom.*;
 import toxi.geom.mesh.*;
 import toxi.geom.mesh.subdiv.*;
@@ -19,8 +31,8 @@ void setup() {
   size(600, 600, P3D);
   gfx = new ToxiclibsSupport(this);
   List<Vec3D> points = new ArrayList<Vec3D>();
-  for (int i=0; i<RES; i++) {
-    points.add(cinquefoil((float)i/RES, 100));
+  for (int i = 0; i < RES; i++) {
+    points.add(knot((float)i / RES, 100));
   }
   PTFGen ptf = new PTFGen(points, true);
   ptf.alignFrames();
@@ -28,22 +40,22 @@ void setup() {
   List<TriangleMesh> meshes = ptf.sweepStrands(40, 12, 7, new Circle(10).toPolygon2D(18).vertices);
   mesh = new TriangleMesh();
   for (TriangleMesh m : meshes) {
-     mesh.addMesh(m); 
+    mesh.addMesh(m);
   }
-  mesh.saveAsSTL(sketchPath(DateUtils.timeStamp()+".stl"));
+  mesh.saveAsSTL(sketchPath(DateUtils.timeStamp() + ".stl"));
 }
 
 void draw() {
   background(51);
   lights();
   noStroke();
-  translate(width/2, height/2, 0);
+  translate(width / 2, height / 2, 0);
   rotateX(mouseY * 0.01);
   rotateY(mouseX * 0.01);
   gfx.mesh(mesh, false);
 }
 
-Vec3D cinquefoil(float t, float s) {
+Vec3D knot(float t, float s) {
   t *= TWO_PI;
   float pt = K1 * t;
   float qt = K2 * t;
@@ -80,12 +92,12 @@ class PTFGen {
     int num = points.size();
     tangents = new ArrayList<Vec3D>(num);
     for (int i = 1; i < num; i++) {
-      tangents.add(points.get(i).sub(points.get(i-1)).normalize());
+      tangents.add(points.get(i).sub(points.get(i - 1)).normalize());
     }
     if (isClosed) {
-      tangents.add(points.get(0).sub(points.get(num-1)).normalize());
+      tangents.add(points.get(0).sub(points.get(num - 1)).normalize());
     } else {
-      tangents.add(tangents.get(tangents.size()-1));
+      tangents.add(tangents.get(tangents.size() - 1));
     }
     return tangents;
   }
@@ -126,7 +138,7 @@ class PTFGen {
   void alignFrames() {
     int num = tangents.size();
     Vec3D a = frames.get(0).n;
-    Vec3D b = frames.get(num-1).n;
+    Vec3D b = frames.get(num - 1).n;
     float theta = acos(constrain(a.dot(b), -1.0, 1.0)) / (num - 1);
     if (tangents.get(0).dot(a.cross(b)) > 0.0) {
       theta *= -1;
@@ -143,8 +155,7 @@ class PTFGen {
     return new Vec3D(
     profile.x * frame.n.x + profile.y * frame.bn.x + p.x, 
     profile.x * frame.n.y + profile.y * frame.bn.y + p.y, 
-    profile.x * frame.n.z + profile.y * frame.bn.z + p.z
-      );
+    profile.x * frame.n.z + profile.y * frame.bn.z + p.z);
   }
 
   List<Vec3D> sweepProfilePoints(List<Vec2D> profile, PTF frame, Vec3D p) {
@@ -157,8 +168,8 @@ class PTFGen {
 
   void buildFaces(Mesh3D mesh, List<Vec3D> prev, List<Vec3D> curr, int n) {
     for (int j = 0; j < n; j++) {
-      mesh.addFace(prev.get(j), curr.get(j+1), prev.get(j+1));
-      mesh.addFace(prev.get(j), curr.get(j), curr.get(j+1));
+      mesh.addFace(prev.get(j), curr.get(j + 1), prev.get(j + 1));
+      mesh.addFace(prev.get(j), curr.get(j), curr.get(j + 1));
     }
   }
 
@@ -167,7 +178,7 @@ class PTFGen {
     int nump = profile.size();
     TriangleMesh mesh = new TriangleMesh();
     List<Vec3D> prev = null;
-    for (int i=0; i<num; i++) {
+    for (int i = 0; i < num; i++) {
       List<Vec3D> curr = sweepProfilePoints(profile, frames.get(i), points.get(i));
       curr.add(curr.get(0));
       if (prev != null) {
@@ -187,7 +198,7 @@ class PTFGen {
     int num = points.size();
     List<Vec3D> strand = new ArrayList<Vec3D>();
     for (int i=0; i < num; i++) {
-      Vec2D p = new Vec2D(r+sin(i*delta*2)*30, i * delta + theta).toCartesian();
+      Vec2D p = new Vec2D(r + sin(i * delta * 2) * 30, i * delta + theta).toCartesian();
       strand.add(sweepPoint(points.get(i), frames.get(i), p));
     }
     PTFGen ptf = new PTFGen(strand, isClosed);
@@ -198,8 +209,8 @@ class PTFGen {
   List<TriangleMesh> sweepStrands(float r, int nums, int twists, List<Vec2D> profile) {
     List<TriangleMesh> strands = new ArrayList<TriangleMesh>();
     float delta = twists * TWO_PI / (points.size() - 1);
-    for(int i = 0; i < nums; i++) {
-      strands.add(sweepStrand(r, i*TWO_PI/nums, delta, profile));
+    for (int i = 0; i < nums; i++) {
+      strands.add(sweepStrand(r, i * TWO_PI / nums, delta, profile));
     }
     return strands;
   }
