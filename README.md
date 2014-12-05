@@ -44,9 +44,9 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 ### 2D Subdivions
 
-![Subdivisions](day3/Subdiv/export-1.png)
+![Subdivisions](day3/SubDiv2D/export-1.jpg)
 
-![Subdivisions](day3/Subdiv/subdiv-3.png)
+![Subdivisions](day3/SubDiv2D/subdiv-3.jpg)
 
 ### Agents
 
