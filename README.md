@@ -4,6 +4,16 @@
 
 Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschule.de/architecture/), Dec 2014
 
+# About
+
+This workshop was run with Year 2 students of the architecture class @
+SAC and served both as intensive treatment/introduction of general
+intermediate level programming techniques and computational methods
+for topics related to architectural design. The examples in this
+repository were all developed from scratch as group during the
+workshop, but heavily rely on functionality provided by toxiclibs (and
+of course Processing).
+
 # Requirements
 
 - [Processing](http://processing.org)
@@ -12,6 +22,13 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 - [Source code for this repo](https://github.com/learn-postspectacular/sac-workshop-2014)
 
 ## Day 1 - Iterative processes
+
+- Iterative processes / feedback functions
+- Discussion of various looping constructs
+- Discrete time vs. real time
+- Basic RGB color theory
+- Pixel manipulations
+- Cross-domain parameter mapping
 
 [Source code](day1/)
 
@@ -28,6 +45,14 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 ## Day 2
 
+- 2D/3D vector algebra / geometry / geometry data types
+- Introduction to OOP
+- Introduction to toxiclibs verlet physics
+- Clustering
+- Probabilistic choice selection
+- Mesh structures
+- Mesh export
+
 [Source code](day2/)
 
 ### City clusters
@@ -35,6 +60,13 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 ![](day2/Satellites3/clusters.jpg)
 
 ## Day 3
+
+- Introduction to agents
+- Mesh generation/conversion from 2D/3D entities
+- In-depth discussion of mesh structures
+- Mesh subdivision strategies
+- Recursion
+- Rendering
 
 [Source code](day3/)
 
@@ -50,7 +82,19 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 ## Day 4
 
+- Mesh construction using point strands/lists
+- Recursive application of Parallel-transport frames (sweep meshes)
+- Define 2D subdivision schemes
+- In-depth discussion of normal vectors
+- 3D mesh export from 2D line strips
+- More complex hybrid-2D/3D agent system based on contour finding
+- Systematic exploration of parametric design/search spaces
+
 [Source code](day4/)
+
+### From points to curves to meshes
+
+![](day4/PTFTest/export.jpg)
 
 ### 2D Subdivions
 
@@ -67,6 +111,13 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 | 40        | ![](day4/TerrainAgents/s0.5-2-sd40.jpg) | ![](day4/TerrainAgents/s1-3-sd40.jpg) | ![](day4/TerrainAgents/s1-4-sd40.jpg) | ![](day4/TerrainAgents/s2-5-sd40.jpg) |
 
 ## Day 5
+
+- Working with external data sets
+- CSV parsing
+- Data structures: HashMaps, Sets
+- Aggration functions
+- Data analysis: finding/defining connections/relations
+- Data visualization (chord graph)
 
 [Source code](day5/)
 
