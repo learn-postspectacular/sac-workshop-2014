@@ -30,6 +30,10 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 [Source code](day2/)
 
+### City clusters
+
+![](day2/Satellites3/clusters.jpg)
+
 ## Day 3
 
 [Source code](day3/)
