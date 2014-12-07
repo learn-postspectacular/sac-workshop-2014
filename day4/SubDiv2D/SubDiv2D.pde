@@ -6,6 +6,7 @@
 // Controls:
 // Click to apply next subdiv
 // x - export extruded polygon as STL
+// d - toggle debug mode on/off
 
 // Created during & for workshop at Städelschule Frankfurt
 // (c) 2014 Karsten Schmidt // LPGL3 licensed
@@ -21,24 +22,14 @@ ToxiclibsSupport gfx;
 
 List<Polygon2D> history = new LinkedList<Polygon2D>();
 
+boolean isDebug = true;
 int iterCount = 0;
 
 float[][] iterations = new float[][] {
-  new float[] { 
-    -20, 40, -20
-  }
-  , 
-  new float[] { 
-    10, -20, 10
-  }
-  , 
-  new float[] { 
-    -5, 10, -5
-  }
-  , 
-  new float[] { 
-    0, 5, 0
-  }
+  new float[] { -20, 40, -20 }, 
+  //new float[] { 10, -20, 10 }, 
+  //new float[] { -5, 10, -5 }, 
+  //new float[] { 0, 5, 0}
 };
 
 void setup() {
@@ -46,35 +37,42 @@ void setup() {
   gfx = new ToxiclibsSupport(this);
   poly = new Circle(350).toPolygon2D(3);
   //poly = new Rect(0, 0, 400, 400).toPolygon2D().center();
-  //poly.flipVertexOrder();
+  
+  // uncomment following line to flip normal direction
+  // poly.flipVertexOrder();
 }
 
 void draw() {
   background(255);
   fill(0);
   text(poly.vertices.size(), 20, 20);
-  translate(width/2, height/2);
+  translate(width / 2, height / 2);
   noFill();
   stroke(0, 50);
   for (Polygon2D hp : history) {
     gfx.polygon2D(hp);
   }
-  stroke(255, 0, 0);
   for (Line2D s : poly.getEdges ()) {
+    stroke(255, 0, 0);
     line(s.a.x, s.a.y, s.b.x, s.b.y);
-    //Vec2D m = s.getMidPoint();
-    //fill(255, 0, 0);
-    //ellipse(m.x, m.y, 5, 5);
-    //fill(0, 255, 255);
-    //Vec2D p = s.a.interpolateTo(s.b, 1/3.0);
-    //Vec2D q = s.a.interpolateTo(s.b, 2/3.0);
-    //ellipse(p.x, p.y, 5, 5);
-    //ellipse(q.x, q.y, 5, 5);
-    //Vec2D dir = s.getDirection();
-    //Vec2D normal = dir.getPerpendicular().scale(100);
-    //Vec2D end = m.add(normal);
-    //line(m.x, m.y, end.x, end.y);
-    //ellipse(end.x, end.y, 10, 10);
+    if (isDebug) {
+      Vec2D m = s.getMidPoint();
+      noStroke();
+      fill(0, 255, 0);
+      ellipse(m.x, m.y, 5, 5);
+      fill(0, 255, 255);
+      Vec2D p = s.a.interpolateTo(s.b, 1/3.0);
+      Vec2D q = s.a.interpolateTo(s.b, 2/3.0);
+      ellipse(p.x, p.y, 5, 5);
+      ellipse(q.x, q.y, 5, 5);
+      Vec2D dir = s.getDirection();
+      Vec2D normal = dir.getPerpendicular().scale(100);
+      Vec2D end = m.add(normal);
+      fill(128, 0, 255);
+      ellipse(end.x, end.y, 5, 5);
+      stroke(0, 50);
+      line(m.x, m.y, end.x, end.y);
+    }
   }
 }
 
@@ -126,13 +124,14 @@ void keyPressed() {
   if (key == 'x') {
     extrudePath(100).saveAsSTL(sketchPath("foo.stl"));
   }
+  if (key == 'd') {
+    isDebug = !isDebug;
+  }
 }
 
 void mousePressed() {
   subdividePolygon(iterations[iterCount]);
-  if (iterCount == iterations.length) {
-    iterCount = 0;
-  }
-  //iterCount = (iterCount + 1) % iterations.length;
+  // use modulo op to cycle DNA if end is reached
+  iterCount = (iterCount + 1) % iterations.length;
 }
 
