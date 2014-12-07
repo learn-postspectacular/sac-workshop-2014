@@ -1,3 +1,14 @@
+// Final stage of city area clustering example:
+// - define various area types (residential, commercial, green etc.)
+// - define area usage probabilities
+// - create X areas based on probabilistic distribution
+// - connect/cluster areas using VerletPhysics
+// - visualize areas as cylinders in 2.5D
+// - export city areas as combined mesh
+//
+// Created during & for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // LGPL3 licensed
+
 import toxi.geom.*;
 import toxi.geom.mesh.*;
 import toxi.physics2d.*;
@@ -9,10 +20,9 @@ import toxi.math.*;
 
 import java.util.*;
 
-float radius = 50;
+int NUM_CLUSTERS = 80;
 
 VerletPhysics2D physics;
-
 AttractionBehavior2D attractor;
 
 HashMap<String, List<AreaType>> clusterMap = new HashMap<String, List<AreaType>>();
@@ -34,6 +44,7 @@ void setup() {
   ellipseMode(RADIUS);
   gfx=new ToxiclibsSupport(this);
   
+  // define area distributions/probabilities
   WeightedRandomSet<String> areaTypes = new WeightedRandomSet<String>();
   areaTypes.add("green", 20);
   areaTypes.add("res", 50);
@@ -41,12 +52,10 @@ void setup() {
   areaTypes.add("biz", 15);
 
   physics = new VerletPhysics2D();
-  physics.setDrag(0.05);
+  physics.setDrag(0.1);
   Polygon2D poly=new Circle(0, 0, height/2).toPolygon2D(6);
   physics.addConstraint(new PolygonConstraint(poly, true));
-  //physics.setWorldBounds(new Rect(50, 50, 600, height-100));
-  //physics.addBehavior(new GravityBehavior2D(new Vec2D(0, 0.15f)));
-  for (int i=0; i < 80; i++) {
+  for (int i=0; i < NUM_CLUSTERS; i++) {
     AreaType p = null;
     String type = areaTypes.getRandom();
     if (type.equals("res")) {
@@ -82,10 +91,11 @@ void setup() {
 void draw() {
   physics.update();
   background(255);
-  translate(width/2, height/2, 0);
-  rotateX(PI/3);
+  lights();
+  translate(width/2, height * 0.4, 0);
+  rotateX(PI/4);
   Vec2D apos = attractor.getAttractor();
-  apos.set(mouseX, mouseY);
+  apos.set(mouseX - width / 2, mouseY - height * 0.4);
   stroke(0);
   noFill();
   ellipse(apos.x, apos.y, 100, 100);
@@ -94,9 +104,10 @@ void draw() {
     AreaType atype = (AreaType)p;
     atype.render();
   }
-  // visualize spring
+  // visualize springs
+  stroke(0);
   for (VerletSpring2D s : physics.springs) {
-    line(s.a.x, s.a.y, s.b.x, s.b.y);
+    line(s.a.x, s.a.y, 10, s.b.x, s.b.y, 10);
   }
   fill(0);
   text("frame: "+frameCount, 20, 20);

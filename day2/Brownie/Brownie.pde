@@ -1,5 +1,6 @@
 // Introductory example to OOP & basic inheritance
 // Defines a simple 2D vector class and some methods
+// Also defines sub-class of V2D to demonstrate OOP concepts
 // Simulates Brownian motion
 //
 // Controls:

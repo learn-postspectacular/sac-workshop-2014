@@ -1,3 +1,12 @@
+// Interim stage of city area clustering example (see Satellites3 for later version)
+// - define various area types (residential, commercial, green etc.)
+// - define area usage probabilities
+// - create X areas based on probabilistic distribution
+// - connect/cluster areas using VerletPhysics
+
+// Created during & for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // LGPL3 licensed
+
 import toxi.geom.*;
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;

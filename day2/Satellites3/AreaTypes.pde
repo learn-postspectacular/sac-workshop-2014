@@ -15,6 +15,7 @@ class AreaType extends VerletParticle2D {
   
   void render() {
     fill(col);
+    noStroke();
     gfx.mesh(getMesh(15));
   }
 }
