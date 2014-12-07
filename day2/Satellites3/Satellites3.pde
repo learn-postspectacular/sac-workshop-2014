@@ -46,9 +46,9 @@ void setup() {
   
   // define area distributions/probabilities
   WeightedRandomSet<String> areaTypes = new WeightedRandomSet<String>();
-  areaTypes.add("green", 20);
-  areaTypes.add("res", 50);
-  areaTypes.add("ind", 70);
+  areaTypes.add("green", 30);
+  areaTypes.add("res", 70);
+  areaTypes.add("ind", 50);
   areaTypes.add("biz", 15);
 
   physics = new VerletPhysics2D();
@@ -109,8 +109,6 @@ void draw() {
   for (VerletSpring2D s : physics.springs) {
     line(s.a.x, s.a.y, 10, s.b.x, s.b.y, 10);
   }
-  fill(0);
-  text("frame: "+frameCount, 20, 20);
 }
 
 void keyPressed() {
