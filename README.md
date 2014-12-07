@@ -21,6 +21,11 @@ of course Processing).
 - [SourceTree](http://sourcetreeapp.com/)
 - [Source code for this repo](https://github.com/learn-postspectacular/sac-workshop-2014)
 
+**Note:** We used a build of the current
+[master branch](http://hg.postspectacular.com/toxiclibs/src) of the
+toxiclibs repo. Some examples *might not* work with earlier versions
+(i.e. the last official release v0020).
+
 ## Day 1 - Iterative processes
 
 - Iterative processes / feedback functions
