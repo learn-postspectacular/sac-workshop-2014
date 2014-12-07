@@ -19,7 +19,7 @@ HashMap<String, Person> parseCSV(String path) {
 
 Set<String> uniqueFoodChoices() {
   Set<String> unique = new HashSet<String>();
-  for (Person p : foodies.values()) {
+  for (Person p : people.values()) {
     unique.addAll(p.food);
   }
   println("unique food: " + unique);
@@ -28,7 +28,7 @@ Set<String> uniqueFoodChoices() {
 
 Set<String> uniqueCountries() {
   Set<String> unique = new HashSet<String>();
-  for (Person p : foodies.values()) {
+  for (Person p : people.values()) {
     unique.add(p.country);
   }
   println("unique countries: " + unique);
