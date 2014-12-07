@@ -1,8 +1,13 @@
-// 2D/3D agent system navigating contour lines of a terrain
+// 2D/3D agent system navigating contour lines of a terrain at
+// certain elevations and using a simple sensing strategy using feelers
+//
 // Partly based on TerrainSteering example bundled w/ toxiclibs
 // Various config settings can be adjusted to vary both behavior
-// and visualization, see table for reference:
-// https://github.com/learn-postspectacular/sac-workshop-2014#agents
+// and visualization, see example table for reference:
+// https://github.com/learn-postspectacular/sac-workshop-2014#terrain-agents
+//
+// Terrain can either be loaded via grayscale image or dynamically generated
+// via SimplexNoise class (see setup function)
 //
 // Key controls:
 // 3 - toggle 2d/3d visualization
@@ -25,18 +30,27 @@ import toxi.math.noise.*;
 import java.util.*;
 import javax.media.opengl.GL;
 
-int        IMG_SIZE = 100;
-FloatRange NOISE_SCALE = new FloatRange(0.03, 0.08);
+int        IMG_SIZE = 150;
+// terrain variance (only used for generated terrains)
+FloatRange NOISE_SCALE = new FloatRange(0.02, 0.06);
 
 int        NUM_AGENTS = 500;
-FloatRange SPEED_RANGE = new FloatRange(1, 3);
+// min/max speed of agents
+FloatRange SPEED_RANGE = new FloatRange(2, 5);
+// agent feeler length to determine elevation
 float      SCAN_DIST = 20;
+// half-angle of feelers
 float      SCAN_THETA = PI / 12;
+// scale factor for terrain 
 float      TERRAIN_SCALE = 4;
+// elevation variance for assigned target elevations
 float      EL_BAND_SIZE = 2;
 
+// flag to enable mapping of elevations to hue
 boolean    USE_EL_HUE = true;
-float      HUE_COMPRESS = 20000;
+// compression factor for elevation to hue (higher means less color change)
+float      HUE_COMPRESS = 255;
+// base hue offset
 float      BASE_HUE = 0.0;
 
 PImage img;
@@ -54,8 +68,10 @@ void setup() {
   smooth(8);
   gfx = new ToxiclibsSupport(this);
   img = new PImage(IMG_SIZE, IMG_SIZE);
-  //randomizeTerrain();
-  terrainFromImage("gis2.jpg");
+  // choose randomizeTerrain() to generate random terrain
+  randomizeTerrain();
+  // ...or load terrain from given image
+  // terrainFromImage("gis2.jpg");
   randomizeAgents();
   background(0);
 }
@@ -101,6 +117,7 @@ void randomizeTerrain() {
       el[y * img.width + x] = c;
     }
   }
+  img.save(sketchPath("noise.jpg"));
   terra = new Terrain(img.width, img.height, 4);
   terra.setElevation(el);
   terrainMesh = (TriangleMesh)terra.toMesh();
@@ -124,9 +141,12 @@ FloatRange makeElevationRange(float el) {
 void randomizeAgents() {
   agents = new ArrayList<Agent>();
   GenericSet<FloatRange> elOpts = new GenericSet<FloatRange>();
-  for (int i = 0; i < 255; i += 10) {
-    elOpts.add(makeElevationRange(i));
-  }
+  //for (int i = 0; i < 255; i += 10) {
+  //  elOpts.add(makeElevationRange(i));
+  //}
+  elOpts.add(makeElevationRange(20));
+  elOpts.add(makeElevationRange(60));
+  elOpts.add(makeElevationRange(100));
   for (int i = 0; i < NUM_AGENTS; i++) {
     float x = random(-1, 1) * img.width * TERRAIN_SCALE / 2;
     float y = random(-1, 1) * img.height * TERRAIN_SCALE / 2;

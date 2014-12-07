@@ -120,14 +120,14 @@ class Agent extends Vec2D {
       gfx.line(pos, spL);
       fill(0, 0, 255);
       noStroke();
-      gfx.sphere(new Sphere(spL, 3), 6);
+      gfx.box(new AABB(spL, 1));
     }
     if (spR != null) {
       stroke(0, 255, 0);
       gfx.line(pos, spR);
       fill(0, 255, 0);
       noStroke();
-      gfx.sphere(new Sphere(spR, 3), 6);
+      gfx.box(new AABB(spR, 1));
     }
   }
 }
