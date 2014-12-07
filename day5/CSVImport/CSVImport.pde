@@ -1,3 +1,11 @@
+// A more extensive explanation & working with HashMap datastructures
+// Example shows how to parse a CSV file/spreadsheet into a hash map
+// and then computes a couple of aggregate stats
+// Used as basis for FoodGraph chord visualization example (see other sketch in same folder)
+//
+// Created during & for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // LGPLv3 licensed
+
 import java.util.*;
 
 HashMap<String, List<Integer>> areas = new HashMap<String, List<Integer>>();
@@ -42,7 +50,7 @@ float avgAreaValue(List<Integer> values) {
 AreaValue getMinValueArea() {
   int minV = 1000000;
   String minName = null;
-  for (String name : areas.keySet ()) {
+  for (String name : areas.keySet()) {
     int sum = totalAreaSum(areas.get(name));
     if (sum < minV) {
       minV = sum;
