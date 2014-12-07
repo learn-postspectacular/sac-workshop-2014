@@ -17,6 +17,8 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 
 ### Strange Attractors (DeJong)
 
+| DeJong1 | DeJong2 |
+| ------- | ------- |
 | ![](day1/DeJong1/export.jpg) | ![](day1/DeJong2/export.jpg) |
 
 ### References
