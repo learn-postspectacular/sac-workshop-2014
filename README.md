@@ -9,7 +9,7 @@ Computational design workshop @ [Städelschule Frankfurt](http://www.staedelschu
 This workshop was run with Year 2 students of the architecture class @
 SAC and served both as intensive treatment/introduction of general
 intermediate level programming techniques and computational methods
-for topics related to architectural design. The examples in this
+for topics related to architectural design practice. The examples in this
 repository were all developed from scratch as group during the
 workshop, but heavily rely on functionality provided by toxiclibs (and
 of course Processing).
@@ -124,3 +124,16 @@ of course Processing).
 ### Chord graph visualization
 
 ![](day5/FoodGraph/export.jpg)
+
+
+## License
+
+With exception of the [PTFTest](day4/PTFTest/) example, all other examples are published under the
+[LGPLv3 license](http://www.gnu.org/licenses/lgpl-3.0.txt). A copy of
+the license text is also supplied within the repository.
+
+[PTFTest](day4/PTFTest/) demo licensed under [Apache Software License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+All non-code assets are published under the [Creative Commons Attribution-NonCommercial license](http://creativecommons.org/licenses/by-nc/4.0).
+
+&copy; 2014 Karsten Schmidt
