@@ -1,14 +1,29 @@
-float a=1.4, b=-2.3, c=2.4, d=-2.1;
+// Introduction to iterative functions/processes:
+// Compute & visualize the DeJong strange attractor
+// In this version we also started discussing/implementing
+// simple color theory and pixel manipulations
+//
+// Key controls:
+// space - export screenshot (in sketch folder)
+// r - randomize attractor parameters
+//
+// Created during & for workshop at Städelschule Frankfurt
+// (c) 2014 Karsten Schmidt // LGPLv3 licensed
+
+// DeJong configuration
+float A = 1.4, B = -2.3, C = 2.4, D = -2.1;
 
 int w2,h2;
 float scalex, scaley;
 
+// Computes next X coordinate of attractor
 float dejongX(float x, float y) {
-  return sin(a * y) - cos(b * x);
+  return sin(A * y) - cos(B * x);
 }
 
+// Computes next Y coordinate of attractor
 float dejongY(float x, float y) {
-  return sin(c * x) - cos(d * y);
+  return sin(C * x) - cos(D * y);
 }
 
 void setup() {
@@ -61,10 +76,10 @@ void keyPressed() {
   if (key == ' ') {
     saveFrame(System.currentTimeMillis()+".png");
   } else if (key == 'r') {
-    a = random(-3, 3);
-    b = random(-3, 3);
-    c = random(-3, 3);
-    d = random(-3, 3);
+    A = random(-3, 3);
+    B = random(-3, 3);
+    C = random(-3, 3);
+    D = random(-3, 3);
     background(0);
   }
 }
